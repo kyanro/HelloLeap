@@ -41,6 +41,11 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
+        <Label x:Name="fps" Content="Fps" HorizontalAlignment="Left" Margin="61.573,0,0,102.826" VerticalAlignment="Bottom"/>
+        <Label x:Name="hands" Content="Hands" HorizontalAlignment="Left" Margin="61.573,0,0,72.483" VerticalAlignment="Bottom"/>
+        <Label x:Name="fingers" Content="Fingers" HorizontalAlignment="Left" Margin="61.573,0,0,42.963" VerticalAlignment="Bottom"/>
+        <Label x:Name="time_stomp" Content="TimeStomp" HorizontalAlignment="Left" Margin="61.573,0,0,15.903" VerticalAlignment="Bottom"/>
+        <Label x:Name="id" Content="Id" HorizontalAlignment="Left" Margin="61.573,0,0,121.663" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>

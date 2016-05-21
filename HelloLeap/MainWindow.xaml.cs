@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Leap;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -21,13 +22,53 @@ namespace HelloLeap
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-            Debug.WriteLine("log:" + button.Content);
+        //public MainWindow()
+        //{
+        //    InitializeComponent();
+        //    Debug.WriteLine("log:" + button.Content);
 
-        }
+        //    using (Controller controller = new Controller())
+        //    {
+        //        SampleListener listener = new SampleListener(this);
+        //        controller.Connect += listener.OnServiceConnect;
+        //        controller.Device += listener.OnConnect;
+        //        controller.FrameReady += listener.OnFrame;
 
+        //    }
+
+
+        //}
+
+        //class SampleListener
+        //{
+        //    private MainWindow mainWindow;
+
+        //    public SampleListener(MainWindow mainWindow)
+        //    {
+        //        this.mainWindow = mainWindow;
+        //    }
+
+        //    public void OnServiceConnect(object sender, ConnectionEventArgs args)
+        //    {
+        //        Console.WriteLine("Service Connected");
+        //    }
+
+        //    public void OnConnect(object sender, DeviceEventArgs args)
+        //    {
+        //        Console.WriteLine("Connected");
+        //    }
+
+        //    public void OnFrame(object sender, FrameEventArgs args)
+        //    {
+        //        Leap.Frame frame = args.frame;
+        //        mainWindow.id.Content = frame.Id.ToString();
+        //        mainWindow.time_stomp.Content = frame.Timestamp.ToString();
+        //        mainWindow.fps.Content = frame.CurrentFramesPerSecond.ToString();
+        //        mainWindow.hands.Content = frame.Hands.Count.ToString();
+
+
+        //    }
+        //}
 
         private void button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -35,5 +76,27 @@ namespace HelloLeap
 
             button.Content = "clicked!";
         }
+
+        private Controller controller = new Controller();
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            using (Controller controller = new Controller())
+            {
+                controller.FrameReady += newFrameHandler;
+            }
+        }
+
+        void newFrameHandler(object sender, FrameEventArgs eventArgs)
+        {
+            Leap.Frame frame = eventArgs.frame;
+            this.id.Content = frame.Id.ToString();
+            this.time_stomp.Content = frame.Timestamp.ToString();
+            this.fps.Content = frame.CurrentFramesPerSecond.ToString();
+            this.hands.Content = frame.Hands.Count.ToString();
+        }
+
+
     }
 }
