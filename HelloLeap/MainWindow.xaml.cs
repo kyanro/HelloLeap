@@ -88,6 +88,9 @@ namespace HelloLeap
             }
         }
 
+        long animationStarted;
+        Boolean isLastExtended;
+
         void newFrameHandler(object sender, FrameEventArgs eventArgs)
         {
             Leap.Frame frame = eventArgs.frame;
@@ -95,8 +98,18 @@ namespace HelloLeap
             this.time_stomp.Content = frame.Timestamp.ToString();
             this.fps.Content = frame.CurrentFramesPerSecond.ToString();
             this.hands.Content = frame.Hands.Count.ToString();
+
+            if (frame.Hands.Count > 0 && frame.Hands[0].Fingers.Count >= 1)
+            {
+                //this.fingers.Content = frame.Hands[0].PinchStrength;
+                this.fingers.Content = frame.Hands[0].Fingers[1].IsExtended;
+                if (isLastExtended != frame.Hands[0].Fingers[1].IsExtended)
+                {
+                    this.button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    animationStarted = frame.Timestamp;
+                    isLastExtended = frame.Hands[0].Fingers[1].IsExtended;
+                }
+            }
         }
-
-
     }
 }
